@@ -1,0 +1,61 @@
+<source>
+http://stackoverflow.com/questions/8775850/how-to-add-files-and-folder-to-github-repo
+
+<implementation>
+iurisegtovich@C5atoms:~/Desktop/pushme$ git init
+Initialized empty Git repository in /home/iurisegtovich/Desktop/pushme/.git/
+
+iurisegtovich@C5atoms:~/Desktop/pushme$ git add .
+
+iurisegtovich@C5atoms:~/Desktop/pushme$ git commit -m 'First commit'
+[master (root-commit) e7ec8a3] First commit
+ Committer: iurisegtovich <iurisegtovich@C5atoms.u14.04>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly:
+
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+
+e.g.
+
+    git config --global user.name "iurisegtovich"
+    git config --global user.email iurisegtovich@gmail.com
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 6 files changed, 76 insertions(+)
+ create mode 100644 test interface f gsl/Makefile
+ create mode 100644 test interface f gsl/check_Makefile
+ create mode 100644 test interface f gsl/obj/main.o
+ create mode 100755 test interface f gsl/run/program.elf
+ create mode 100644 test interface f gsl/src/main.f90
+ create mode 100644 test interface f gsl/tee.txt
+ 
+iurisegtovich@C5atoms:~/Desktop/pushme$ git remote add origin https://github.com/iurisegtovich/Learning.git
+
+iurisegtovich@C5atoms:~/Desktop/pushme$ git remote -v
+origin	https://github.com/iurisegtovich/Learning.git (fetch)
+origin	https://github.com/iurisegtovich/Learning.git (push)
+
+iurisegtovich@C5atoms:~/Desktop/pushme$ git remote remove origin
+
+iurisegtovich@C5atoms:~/Desktop/pushme$ git remote add origin https://github.com/iurisegtovich/interface_fortran_gsl.git
+iurisegtovich@C5atoms:~/Desktop/pushme$ git remote -v
+origin	https://github.com/iurisegtovich/interface_fortran_gsl.git (fetch)
+origin	https://github.com/iurisegtovich/interface_fortran_gsl.git (push)
+
+iurisegtovich@C5atoms:~/Desktop/pushme$ git push origin master
+Username for 'https://github.com': iurisegtovich
+Password for 'https://iurisegtovich@github.com': 
+Counting objects: 12, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (7/7), done.
+Writing objects: 100% (12/12), 7.77 KiB | 0 bytes/s, done.
+Total 12 (delta 0), reused 0 (delta 0)
+To https://github.com/iurisegtovich/interface_fortran_gsl.git
+ * [new branch]      master -> master
+
+

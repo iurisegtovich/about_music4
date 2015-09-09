@@ -1,0 +1,37 @@
+DEBUG1:
+
+[em]
+connects.F90
+[era]
+<708>     Integer, Dimension(Size(connect,1)) :: atomlist, all
+[é]
+<708>     Integer, Dimension(Size(connect,1)) :: natomlist, all
+[era]
+      nxaway = connects_atomsxaway(connect,i,xaway,atomlist,paths)
+[é]
+      nxaway = connects_atomsxaway(connect,i,xaway,natomlist,paths)
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  Subroutine config_getv(sorbates,sorb,vpntr)
+    Type(AtMolCoords), Dimension(:), Intent(In), Target :: sorbates
+    Integer, Intent(In) :: sorb
+    Type(VecType), Dimension(:,:), Pointer :: vpntr
+    !need array of pointers!
+    Type(RectCoords), pointer ::temp(:,:)
+    Integer :: natoms, nmoles
+integer::i,j
+
+    If (Associated(sorbates(sorb)%coords)) Then
+      natoms = config_getnatoms(sorbates,sorb)
+      nmoles = config_getnmoles(sorbates,sorb)
+      temp=>sorbates(sorb)%coords(1:natoms,1:nmoles)
+      do i=1,natoms 
+        do j=1,nmoles
+          vpntr(i,j) => temp(i,j)%v
+        enddo
+      enddo
+    Else
+      nullify(vpntr)
+    End If
+  End Subroutine config_getv
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
