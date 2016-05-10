@@ -1,6 +1,13 @@
 DEBUG1:
 
 [in]
+Makefile (every time makemake is run)
+[before]
+# FORTRAN_COMPILER= yourcompilername
+[now]
+ FORTRAN_COMPILER= gfortran
+ 
+[in]
 connects.F90
 [before]
 <708>     Integer, Dimension(Size(connect,1)) :: atomlist, all
