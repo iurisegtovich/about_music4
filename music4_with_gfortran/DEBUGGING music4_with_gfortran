@@ -2,6 +2,7 @@ DEBUG1:
 
 [in]
 Makefile (every time makemake is run)
+<24>
 [before]
 # FORTRAN_COMPILER= yourcompilername
 [now]
@@ -9,18 +10,24 @@ Makefile (every time makemake is run)
  
 [in]
 connects.F90
+<708>
 [before]
-<708>     Integer, Dimension(Size(connect,1)) :: atomlist, all
+    Integer, Dimension(Size(connect,1)) :: atomlist, all
 [now]
-<708>     Integer, Dimension(Size(connect,1)) :: natomlist, all
+    Integer, Dimension(Size(connect,1)) :: atomlist_obj, all
+<722>     
 [before]
       nxaway = connects_atomsxaway(connect,i,xaway,atomlist,paths)
 [now]
-      nxaway = connects_atomsxaway(connect,i,xaway,natomlist,paths)
+      nxaway = connects_atomsxaway(connect,i,xaway,atomlist_obj,paths)
 
 [in]
 config.F90
+<1606>
 [before]
+  !----------------------------------------------------------------------------
+  ! Returns a pointer to the velocities for sorbate sorb
+  !----------------------------------------------------------------------------
   Subroutine config_getv(sorbates,sorb,vpntr)
     Type(AtMolCoords), Dimension(:), Intent(In), Target :: sorbates
     Integer, Intent(In) :: sorb
@@ -36,25 +43,42 @@ config.F90
     End If
   End Subroutine config_getv
 [now]
+  !----------------------------------------------------------------------------
+  ! Returns a pointer to the velocities for sorbate sorb
+  ! THIS SUBROUTINE WILL NOT COMPILE IN GFORTRAN gcc version 4.8.4 (Ubuntu 4.8.4-2ubuntu1~14.04.1) 
+  ! "If you want an array of pointers you need to use a derived type"
+  !nevertheless, this subroutine appears never to be called from any of the subroutines or drivers.
+  !    after these modifications, usage of "vpntr(i,j)" from callers should be replaced by usage of "vpntr(i,j)%v"
+  !----------------------------------------------------------------------------
   Subroutine config_getv(sorbates,sorb,vpntr)
     Type(AtMolCoords), Dimension(:), Intent(In), Target :: sorbates
     Integer, Intent(In) :: sorb
-    Type(VecType), Dimension(:,:), Pointer :: vpntr
-    !need array of pointers!
-    Type(RectCoords), pointer ::temp(:,:)
-    Integer :: natoms, nmoles
-integer::i,j
+
+    type VecType_ptr
+      Type(VecType), Pointer :: v
+    end type
+
+    Type(VecType_ptr), Dimension(:,:), Pointer :: vpntr
+    Integer :: natoms, nmoles, i, j
 
     If (Associated(sorbates(sorb)%coords)) Then
+    
       natoms = config_getnatoms(sorbates,sorb)
       nmoles = config_getnmoles(sorbates,sorb)
-      temp=>sorbates(sorb)%coords(1:natoms,1:nmoles)
-      do i=1,natoms 
-        do j=1,nmoles
-          vpntr(i,j) => temp(i,j)%v
+      allocate( vpntr(natoms, nmoles) )
+      do i = 1, natoms
+        do j = 1, nmoles
+          vpntr(i,j)%v => sorbates(sorb)%coords(i,j)%v
         enddo
       enddo
+
     Else
-      nullify(vpntr)
+      do i = 1, natoms
+        do j = 1, nmoles
+          nullify(vpntr(i,j)%v)
+        enddo
+      enddo
+      deallocate(vpntr)
     End If
+    
   End Subroutine config_getv
