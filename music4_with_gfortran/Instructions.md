@@ -41,7 +41,8 @@ Link para o tutorial:
 !----------------------------------------
 http://www.see.ed.ac.uk/~tduren/research/music/Tutorial/
 !----------------------------------------
-O programa foi utilizado em Ubuntu 12.10, 64bits, não foi possível compilar os códigos utilizando o compilador gfortran, foi necessária então a utilização do compilador ifort (intel fortran) para ubuntu, a instalação foi feita como descrito abaixo:
+O programa foi utilizado em Ubuntu 12.10, 64bits, a princípio não foi possível compilar os códigos utilizando o compilador gfortran, foi necessária então a utilização do compilador ifort (intel fortran) para ubuntu, a instalação foi feita como descrito abaixo:
+obs: as modificações inseridas em "DEBUGGING_music4_for_compatibility_with_gfortran.md" devem permitir compilar com gfortran
 !----------------------------------------
 [download]
 http://software.intel.com/en-us/non-commercial-software-development
