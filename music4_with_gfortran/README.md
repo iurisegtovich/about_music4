@@ -8,3 +8,4 @@ a report of usage that I wrote when i used the codes in a assignment for a molec
 
 note that the full src code is not here because snurr, in his website, was willing to share the code freely for academics, but subject to personal contact via email
 
+also, check https://github.com/hermesribeiro
